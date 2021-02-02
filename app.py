@@ -4,17 +4,21 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@localhost/Book"
 app.config['SQLALchemy_DATABASE_URI'] = "sqlite:////tmp/test.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
 class Book(db.Model):
-    book_title = db.Column(db.String(30), nullable=False, primary_key=True)
+    book_title = db.Column(db.String(30), primary_key=True)
+    author = db.Column(db.String(30))
+    rating = db.Column(db.String(30))
+    date_finished = db.Column(db.String(30))
 
-class User(db.Model):
-    user_name = db.Column(db.String, primary_key=True)
-    user_email = db.Column(db.String)
+# class User(db.Model):
+#     u_name = db.Column(db.String(30), primary_key=True)
+    #user_email = db.Column(db.String(30))
 
 db.create_all()
 
@@ -22,10 +26,16 @@ db.create_all()
 def home():
     if request.form:
         book_db = Book(book_title=request.form.get("book_title"))
-        db.session.add(book_db)
-        db.session.commit()
-    registrees = Book.query.all()
-    return render_template("home.html", registrees=registrees)
+        author_db = Book(author=request.form.get("author"))
+        rating_db = Book(rating=request.form.get("rating"))
+        date_finished_db = Book(date_finished=request.form.get("date"))
+        # u_name = User(u_name=request.form.get("u_name"))
+        db.session.add(book_db) 
+        # db.session.add(u_name)
+       	db.session.commit()
+    book_lists = Book.query.all()
+    # u_name = User.query.all()
+    return render_template("home.html", book_lists=book_lists)
 
 @app.route("/update", methods=["POST"])
 def update():
