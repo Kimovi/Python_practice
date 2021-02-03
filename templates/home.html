@@ -1,35 +1,74 @@
 <html>
   <head>
-    <title>Add person</title>
+    <title>Let's Flask it</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
-    <h1>Add Person</h1>
-    <form method="POST" action="/">
-      <input type="text" name="name"> <input type="submit" value="Add">
-    </form>
-    <h2>Register</h2>
-    <table>
-      {% for person in registrees %}
-        <tr>
-          <td>
-            {{person.name}} 
-          </td>
-          <td>
-            <form method="POST" action="./update">
-              <input type="hidden" value="{{person.name}}" name="oldname">
-              <input type="text" value="{{person.name}}" name="newname">
-              <input type="submit" value="Update">
-            </form>
-          </td>
-          <td>
-            <form method="POST" action="./delete">
-              <input type="hidden" value="{{person.name}}" name="name">
-              <input type="submit" value="Delete">
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-    </table>
-  </body>
+    <div class ="main">
+        <h1>Let's Flask it</h1>
+        <form method="POST" action="/">
+          Book title : <input type="text" name="book_title"><br>
+          Author : <input type="text" name="author"><br>
+          Rating : <input type="text" name="rating"><br>
+          Date : <input type="text" name="date"><br>
+        <input type="submit" value="Add">
+        </form> 
+      <h2>Your list</h2>      
+      <table>
+        {% for i in book_lists %}
+          <tr>
+            <td>
+              {{i.book_title}}
+              {{i.author}} 
+            </td>
+            <td>
+              <form method="POST" action="./update">
+                <input type="hidden" value="{{i.book_title}}" name="oldbook_title">
+                <input type="text" value="{{i.book_title}}" name="newbook_title">
+                <input type="submit" value="Update">
+              </form>
+            </td>
+            <td>
+              <form method="POST" action="./delete">
+                <input type="hidden" value="{{i.book_title}}" name="book_title">
+                <input type="submit" value="Delete">
+              </form>
+            </td>
+          </tr>
+            {% endfor %}
+      </table>
+	<!-- <form method="POST" action="/">
+          User name : <input type="text" name="u_name">
+          <input type="submit" value="Add">
+	<ul>
+	{% for j in u_name %}
+	<li> {{j.u_name}} </li>
+	{% endfor %}
+	</ul>  -->
+ </body>
 </html>
+
+      <!-- <table>
+        <tr>
+          <th>User name</th>
+          <th>Options</th>
+        </tr>
+        {% for book in book_lists %}
+          <tr>
+            <td>
+              {{book.book_title}} 
+            </td>
+            <td>
+              <form method="POST" action="./update">
+                <input type="hidden" value="{{book.book_title}}" name="oldname">
+                <input type="text" value="{{book.book_title}}" name="newname">
+                <input type="submit" value="Update">
+              </form>
+              <form method="POST" action="./delete">
+                <input type="hidden" value="{{book.book_title}}" name="name">
+                <input type="submit" value="Delete">
+              </form>
+            </td>
+          </tr>
+            {% endfor %}
+      </table> -->
